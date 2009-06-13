@@ -23,7 +23,7 @@ Usage
 
 Snapshot
 --------
-![shoes\_tone\_matrix\_snapshot.png](http://github.com/ashbb/piano/raw/master/shoes_tone_matrix_snapshot.png)
+![shoes\_tone\_matrix\_snapshot.png](http://github.com/ashbb/shoes_tone_matrix/raw/master/shoes_tone_matrix_snapshot.png)
 
 
 Change log
