@@ -11,7 +11,7 @@ require case PLATFORM
   
 SOUNDS = [107, 105, 103, 101, 100, 98, 96, 95, 93, 91, 89, 88, 86, 84, 83, 81]
 
-Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.1' do
+Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.1a' do
   background black
   sounds = []
   16.times{sounds << Array.new(16, 0)}
@@ -35,7 +35,8 @@ Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.1' do
     loop do
       16.times do
         sounds.each do |mn|
-          midi.play mn, 0.125
+          mn -= [0]
+          mn.empty? ? sleep(0.125) : midi.play(mn, 0.125)
         end
       end
     end

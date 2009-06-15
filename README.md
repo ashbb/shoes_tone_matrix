@@ -28,6 +28,7 @@ Snapshot
 
 Change log
 ----------
+Jun 15th, 2009: Without using MIDI number zero for Linux. (v0.1a)   
 Jun 13th, 2009: First release v0.1
 
 
@@ -45,3 +46,9 @@ License
 -------
 Distributed under the terms of the MIT license.
 Look at [midiator/LICENSE](http://github.com/bleything/midiator/tree/master/LICENSE).
+
+
+References
+----------
+
+- [piano](http://github.com/ashbb/piano/tree/master)
