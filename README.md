@@ -28,6 +28,7 @@ Snapshot
 
 Change log
 ----------
+Jun 17th, 2009: Implemented Paul's suggestion No.1 (v0.2)   
 Jun 15th, 2009: Without using MIDI number zero for Linux. (v0.1a)   
 Jun 13th, 2009: First release v0.1
 
@@ -35,7 +36,9 @@ Jun 13th, 2009: First release v0.1
 To do list
 ----------
 
-- add a clear button
+- [Paul's suggestions](http://github.com/ashbb/shoes_tone_matrix/tree/master/pauls_suggestions.md)
+- to/from clipboard ......... done!
+- clear by space-key ........ done! 
 - add more visual effect
 - change tone type
 - change sound speed
