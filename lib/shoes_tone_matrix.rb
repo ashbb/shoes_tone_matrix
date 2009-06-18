@@ -10,12 +10,17 @@ require case PLATFORM
   else 'midi_linux' end
   
 SOUNDS = [107, 105, 103, 101, 100, 98, 96, 95, 93, 91, 89, 88, 86, 84, 83, 81]
+COLOR0, COLOR1, COLOR2 = rgb(255, 255, 255, 0.3), rgb(255, 255, 254, 0.7), rgb(135, 206, 250, 0.7)
 
-Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.2' do
+data = IO.readlines('General_Midi_Programs.data')
+data = data.reverse.collect{|e| e.chomp}
+GMP = Hash[*data]
+
+Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.4' do
   background black
-  sounds, nodes = [], []
-  16.times{sounds << Array.new(16, 0)}
-  16.times{nodes << Array.new(16, 0)}
+  @sounds, @cells, @gmp = [], [], 0
+  16.times{@sounds << Array.new(16, 0)}
+  16.times{@cells << Array.new(16, 0)}
   
   f = lambda{|n| n == 1 ? 2 : f[n-1] * 2}
 
@@ -26,54 +31,64 @@ Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.2' do
   
   arr2tmd = lambda{|a| ret = 0; a.each_with_index{|e, i| ret += e * f[i+1]}; ret}
   
-  self.clipboard = sounds.collect{|sound| arr2tmd[sound]}.inspect
+  self.clipboard = @sounds.collect{|sound| arr2tmd[sound]}.inspect
   
   16.times do |i|
     16.times do |j|
       x, y = i * 30 + 20, j * 30 + 20
-      nodes[i][j] = rect(x, y, 25, 25, :fill => rgb(255, 255, 255, 0.3), :curve => 5)
-      nodes[i][j].click do
-        a, b = sounds[i][j] == 0 ? [1, 0.7] : [0, 0.3]
-        sounds[i][j] = a
-        nodes[i][j].fill = rgb(255, 255, 255, b)
+      @cells[i][j] = rect(x, y, 25, 25, :fill => COLOR0, :curve => 5)
+      @cells[i][j].click do
+        a, b = @sounds[i][j] == 0 ? [1, COLOR1] : [0, COLOR0]
+        @sounds[i][j] = a
+        @cells[i][j].fill = b
       end
     end
   end
   
-  para link('To clipboard'){self.clipboard = sounds.collect{|sound| arr2tmd[sound]}.inspect}, 
-    :left => 30, :top => 500
+  para link('To clipboard'){self.clipboard = @sounds.collect{|sound| arr2tmd[sound]}.inspect}, 
+    :left => 10, :top => 500
     
   para link('From clipboard'){
-    eval('[' + self.clipboard + ']').flatten.each_with_index{|tmd, i| sounds[i] = tmd2arr[tmd]}
+    eval('[' + self.clipboard + ']').flatten.each_with_index{|tmd, i| @sounds[i] = tmd2arr[tmd]}
     16.times do |i|
       16.times do |j|
-        nodes[i][j].fill = rgb(255, 255, 255, sounds[i][j] == 0 ? 0.3 : 0.7)
+        @cells[i][j].fill = @sounds[i][j] == 0 ? COLOR0 : COLOR1
        end
     end
-    }, :left => 200, :top => 500
-  
-  keypress do |key|
+    }, :left => 110, :top => 500
+
+  para link('CLEAR'){
     16.times do |i|
       16.times do |j|
-        sounds[i][j] = 0
-        nodes[i][j].fill = rgb(255, 255, 255, 0.3)
+        @sounds[i][j] = 0
+        @cells[i][j].fill = COLOR0
       end
-    end if key == ' '
-  end
+    end
+  }, :left => 230, :top => 500
 
+  list_box :items => GMP.collect{|k, v| k}.sort, :choose => 'Acoustic Grand Piano', 
+    :height => 30, :left => 300, :top => 505 do |item|
+      @gmp = GMP[item.text].to_i
+  end
+  
   sound2mn = lambda{|x| ret = []; x.each_with_index{|e, i| ret << (e.zero? ? 0 : SOUNDS[i])}; ret}
   
+  chcolor = lambda do |i, c|
+    @cells[i].each_with_index{|cell, j| cell.fill = c if @sounds[i][j] == 1}
+  end
+  
   midi = MIDI.new
-  midi.program_change 0, 1
+  midi.program_change 0, @gmp
   
   Thread.start do
     loop do
-      16.times do
-        sounds.each do |sound|
-          mn = sound2mn[sound]
-          mn -= [0]
-          mn.empty? ? sleep(0.125) : midi.play(mn, 0.125)
-        end
+      midi.program_change 0, @gmp
+      @sounds.each_with_index do |sound, n|
+        chcolor[n - 1, COLOR1]
+        chcolor[n, COLOR2]
+        mn = sound2mn[sound]
+        mn -= [0]
+        mn.empty? ? sleep(0.125) : midi.play(mn, 0.125)
       end
     end
   end
