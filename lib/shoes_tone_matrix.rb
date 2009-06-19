@@ -16,9 +16,12 @@ data = IO.readlines('General_Midi_Programs.data')
 data = data.reverse.collect{|e| e.chomp}
 GMP = Hash[*data]
 
-Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.4' do
+Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.5' do
   background black
-  @sounds, @cells, @gmp = [], [], 0
+  style Link, :stroke => white, :underline => nil, :weight => 'bold'
+  style LinkHover, :stroke => gold, :fill => nil, :underline => nil
+  
+  @sounds, @cells, @gmp, @on = [], [], 0, false
   16.times{@sounds << Array.new(16, 0)}
   16.times{@cells << Array.new(16, 0)}
   
@@ -45,26 +48,28 @@ Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.4' do
     end
   end
   
-  para link('To clipboard'){self.clipboard = @sounds.collect{|sound| arr2tmd[sound]}.inspect}, 
+  para link('Copy'){self.clipboard = @sounds.collect{|sound| arr2tmd[sound]}.inspect}, 
     :left => 10, :top => 500
     
-  para link('From clipboard'){
+  para link('Paste'){
     eval('[' + self.clipboard + ']').flatten.each_with_index{|tmd, i| @sounds[i] = tmd2arr[tmd]}
     16.times do |i|
       16.times do |j|
         @cells[i][j].fill = @sounds[i][j] == 0 ? COLOR0 : COLOR1
        end
     end
-    }, :left => 110, :top => 500
+    }, :left => 80, :top => 500
 
-  para link('CLEAR'){
+  para link('Clear'){
     16.times do |i|
       16.times do |j|
         @sounds[i][j] = 0
         @cells[i][j].fill = COLOR0
       end
     end
-  }, :left => 230, :top => 500
+  }, :left => 150, :top => 500
+  
+  para link('off/on'){@on = !@on}, :left => 230, :top => 500
 
   list_box :items => GMP.collect{|k, v| k}.sort, :choose => 'Acoustic Grand Piano', 
     :height => 30, :left => 300, :top => 505 do |item|
@@ -84,8 +89,8 @@ Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.4' do
     loop do
       midi.program_change 0, @gmp
       @sounds.each_with_index do |sound, n|
-        chcolor[n - 1, COLOR1]
-        chcolor[n, COLOR2]
+        chcolor[n - 1, COLOR1]  if @on
+        chcolor[n, COLOR2]  if @on
         mn = sound2mn[sound]
         mn -= [0]
         mn.empty? ? sleep(0.125) : midi.play(mn, 0.125)

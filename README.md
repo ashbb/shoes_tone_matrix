@@ -25,9 +25,13 @@ Snapshot
 --------
 ![shoes\_tone\_matrix\_snapshot.png](http://github.com/ashbb/shoes_tone_matrix/raw/master/shoes_tone_matrix_snapshot.png)
 
+[16, 64, 256, 1024, 256, 64, 1552, 2304, 2304, 1536, 2048, 9152, 8768, 8768, 8768, 7232]
+
+<br>
 
 Change log
 ----------
+Jun 19th, 2009: Improved link button style and added visual effect off/on button (v0.5)   
 Jun 18th, 2009: Implemented Paul's suggestion No.2 and 3. Add CLEAR button. (v0.4)   
 Jun 17th, 2009: Implemented Paul's suggestion No.1 (v0.2)   
 Jun 15th, 2009: Without using MIDI number zero for Linux. (v0.1a)   
@@ -39,11 +43,13 @@ To do list
 
 - [Paul's suggestions](http://github.com/ashbb/shoes_tone_matrix/tree/master/pauls_suggestions.md)
 - to/from clipboard ......... done!
-- clear by space-key ........ done! 
+- clear by space-key ........ done! (obsolete)
+- add clear button .......... done!
 - add more visual effect .... done!
 - change tone type .......... done!
 - change sound speed
 - save tone matrix data
+- add visual effect off/on button .. done!
 
 
 License
@@ -56,3 +62,5 @@ References
 ----------
 
 - [piano](http://github.com/ashbb/piano/tree/master)
+- [General Midi Programs (0 - 127)](http://www.ec.vanderbilt.edu/computermusic/musc216site/GM.Programs.html)
+  General_Midi_Programs.data is created by this data.
