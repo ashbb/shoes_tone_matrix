@@ -10,13 +10,13 @@ require case PLATFORM
   else 'midi_linux' end
   
 SOUNDS = [107, 105, 103, 101, 100, 98, 96, 95, 93, 91, 89, 88, 86, 84, 83, 81]
-COLOR0, COLOR1, COLOR2 = rgb(255, 255, 255, 0.3), rgb(255, 255, 254, 0.7), rgb(135, 206, 250, 0.7)
+COLOR0, COLOR1, COLOR2 = rgb(255, 255, 255, 0.3), rgb(255, 255, 255, 0.7), rgb(135, 206, 250, 0.7)
 
 data = IO.readlines('General_Midi_Programs.data')
 data = data.reverse.collect{|e| e.chomp}
 GMP = Hash[*data]
 
-Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.5' do
+Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.5a' do
   background black
   style Link, :stroke => white, :underline => nil, :weight => 'bold'
   style LinkHover, :stroke => gold, :fill => nil, :underline => nil
