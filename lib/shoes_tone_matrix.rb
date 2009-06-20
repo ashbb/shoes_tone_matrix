@@ -10,20 +10,20 @@ require case PLATFORM
   else 'midi_linux' end
   
 SOUNDS = [107, 105, 103, 101, 100, 98, 96, 95, 93, 91, 89, 88, 86, 84, 83, 81]
-COLOR0, COLOR1, COLOR2 = rgb(255, 255, 255, 0.3), rgb(255, 255, 255, 0.7), rgb(135, 206, 250, 0.7)
+COLOR0, COLOR1, COLOR2 = rgb(255, 255, 255, 0.3), rgb(255, 255, 254, 0.7), rgb(135, 206, 250, 0.7)
 
 data = IO.readlines('General_Midi_Programs.data')
 data = data.reverse.collect{|e| e.chomp}
 GMP = Hash[*data]
 
-Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.5a' do
+Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.5' do
   background black
   style Link, :stroke => white, :underline => nil, :weight => 'bold'
   style LinkHover, :stroke => gold, :fill => nil, :underline => nil
   
-  @sounds, @cells, @gmp, @on = [], [], 0, false
-  16.times{@sounds << Array.new(16, 0)}
-  16.times{@cells << Array.new(16, 0)}
+  @gmp, @on = 0, false
+  @sounds = Array.new(16) { Array.new(16,0) }
+  @cells = Array.new(16) { Array.new(16,0) }
   
   f = lambda{|n| n == 1 ? 2 : f[n-1] * 2}
 
@@ -41,9 +41,8 @@ Shoes.app :width => 520, :height => 530, :title => 'Shoes ToneMatrix v0.5a' do
       x, y = i * 30 + 20, j * 30 + 20
       @cells[i][j] = rect(x, y, 25, 25, :fill => COLOR0, :curve => 5)
       @cells[i][j].click do
-        a, b = @sounds[i][j] == 0 ? [1, COLOR1] : [0, COLOR0]
-        @sounds[i][j] = a
-        @cells[i][j].fill = b
+        @cells[i][j].fill = @sounds[i][j] == 0 ? COLOR1 : COLOR
+        @sounds[i][j] ^= 1 # toggle cell status
       end
     end
   end
