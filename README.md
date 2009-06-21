@@ -33,6 +33,7 @@ Look at [online demo](http://www.rin-shun.com/rubylearning/shoes/shoes_tone_matr
 
 Change log
 ----------
+Jun 21th, 2009: Merged [citizen428](http://github.com/citizen428)'s pull request and a small refactoring (v0.5b)   
 Jun 20th, 2009: Added a link to an online demo. Fixed a trivial typo (v0.5a)   
 Jun 19th, 2009: Improved link button style and added visual effect off/on button (v0.5)   
 Jun 18th, 2009: Implemented Paul's suggestion No.2 and 3. Add CLEAR button. (v0.4)   
