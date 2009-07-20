@@ -11,7 +11,7 @@ I've hacked [bleything/midiator](http://github.com/bleything/midiator/tree/maste
 I know I can use MIDIator gem with Shoes. But I want to understand the basic MIDI usage and this tiny Shoes app doesn't need the big codes.
 
 Shoes Tone Matrix v0.1 includes the drivers for Mac and Linux. But I have no Mac and Linux... :(   
-**Hope someone attempt to run v0.1 on his/her Mac or Linux and let me know what happen.** ;-)
+**Hope someone attempt to run v0.5b on his/her Mac or Linux and let me know what happen.** ;-)
 
 
 Usage
@@ -31,8 +31,15 @@ Look at [online demo](http://www.rin-shun.com/rubylearning/shoes/shoes_tone_matr
 
 <br>
 
+Outputting to a synthesizer on Windows XP!
+------------------------------------------
+- [Paul's great work](http://github.com/ashbb/shoes_tone_matrix/tree/master/pauls_great_work.md)
+
+<br>
+
 Change log
 ----------
+Jul 20th, 2009: Added Paul's great work.   
 Jun 21th, 2009: Merged [citizen428](http://github.com/citizen428)'s pull request and a small refactoring (v0.5b)   
 Jun 20th, 2009: Added a link to an online demo. Fixed a trivial typo (v0.5a)   
 Jun 19th, 2009: Improved link button style and added visual effect off/on button (v0.5)   
