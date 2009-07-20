@@ -1,5 +1,5 @@
-Outputting to a synthesizer on WinXP!
-=====================================
+Outputting to a synthesizer on Windows XP!
+==========================================
 Hi Satoshi,
 
 I have re-patched sound output from Ruby and Shoes to a synthesizer on Linux (it's actually quite simple). However, I've recently built a new PC with WinXP (SP3) as there is a better variety of synthesizer related software available than on Linux. BUT, although I have been able to hear midi sound output from the various Ruby/Shoes applications (particularly, Satoshi's amazing Tone Matrix), I have been unable to route it to a synthesizer, to vary the type of sound output beyond the built-in GM synthesizer in Windows (part of the normal sound-out). UNTIL NOW. With a little help from the Ruby Midi Google group (particularly Thibaut Barrere), I have been able to patch output from Ruby/Shoes to a synthesizer! B-)
